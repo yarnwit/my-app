@@ -3,7 +3,17 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 require('dotenv').config({ path: '../.env' });
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 
 const app = express();
 app.use(cors());
@@ -58,6 +68,66 @@ app.post('/api/auth/login', async (req, res) => {
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: 'Server Error' });
+    }
+});
+
+app.post('/api/auth/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+        if(user.rows.length === 0){
+            return res.status(404).json({ message: 'ไม่พบอีเมลนี้ในระบบ' });
+        }
+
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        const toKenExpiry = new Date(Date.now() + 3600000);
+
+        await pool.query(
+            'UPDATE users SET reset_token = $1, reset_token_expiry = $2 WHERE email = $3',
+            [resetToken, toKenExpiry, email]
+        );
+
+        const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'รีเซ็ตรหัสผ่านของคุณ',
+            html: `<p>คุณได้ขอรีเซ็ตรหัสผ่าน กรุณาคลิกที่ลิงก์ด้านล่างเพื่อตั้งรหัสผ่านใหม่:</p>
+                   <a href="${resetLink}">${resetLink}</a>
+                   <p>ลิงก์นี้จะหมดอายุใน 1 ชั่วโมง</p>`
+        });
+
+        res.json({ message: 'ส่งลิงก์รีเซ็ตรหัสผ่านไปยังอีเมลของคุณแล้ว' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
+app.post('/api/auth/reset-password', async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+
+        const user = await pool.query('SELECT * FROM users WHERE reset_token = $1 AND reset_token_expiry > NOW()', [token]);
+
+        if(user.rows.length === 0){
+            return res.status(400).json({ message: 'Token ไม่ถูกต้องหรือหมดอายุแล้ว' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(newPassword, salt);
+
+        await pool.query(
+            'UPDATE users SET password_hash = $1, reset_token = NULL, reset_token_expiry = NULL WHERE id = $2',
+            [passwordHash, user.rows[0].id]
+        );
+
+        res.json({ message: 'รีเซ็ตรหัสผ่านสำเร็จ คุณสามารถเข้าสู่ระบบด้วยรหัสผ่านใหม่ได้เลย' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Srever Error' });
     }
 });
 
