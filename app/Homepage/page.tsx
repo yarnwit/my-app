@@ -1,7 +1,34 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import { Search, User, ShoppingBag, ArrowRight, Truck, ShieldCheck, Clock } from 'lucide-react';
 
 export default function MinimalStore() {
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('token');
+      if(!token) return;
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/me', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if(response.ok) {
+          const data = await response.json();
+          setUserEmail(data.email);
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-gray-900 font-sans">
       {/* 1. Navbar */}
@@ -23,8 +50,17 @@ export default function MinimalStore() {
 
             {/* Right Icons */}
             <div className="flex items-center space-x-6">
-              <button className="text-gray-600 hover:text-black"><Search size={20} strokeWidth={1.5} /></button>
-              <button className="text-gray-600 hover:text-black"><User size={20} strokeWidth={1.5} /></button>
+              <button className="text-gray-600 hover:text-black">
+                <Search size={20} strokeWidth={1.5} />
+              </button>
+
+              {/* เช็คว่ามี userEmail หรือไม่ ถ้ามีให้แสดงอีเมล ถ้าไม่มีให้แสดงไอคอน User ตามปกติ */}
+              {userEmail ? (
+                <span className="text-sm font-medium text-gray-700">{userEmail}</span>
+              ) : (
+                <button className="text-gray-600 hover:text-black"><User size={20} strokeWidth={1.5} /></button>
+              )}
+
               <button className="text-gray-600 hover:text-black relative">
                 <ShoppingBag size={20} strokeWidth={1.5} />
               </button>

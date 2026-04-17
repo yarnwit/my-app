@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const pool = require('./db');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const auth = require('./middleware/auth');
 require('dotenv').config({ path: '../.env' });
 
 const transporter = nodemailer.createTransport({
@@ -128,6 +129,22 @@ app.post('/api/auth/reset-password', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Srever Error' });
+    }
+});
+
+app.get('/api/auth/me', auth, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const user = await pool.query('SELECT id, email FROM users WHERE id = $1', [userId]);
+
+        if(user.rows.length === 0){
+            return res.status(404).json({ message: 'ไม่พบข้อมูลผู้ใช้งาน' });
+        }
+
+        res.json(user.rows[0]);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: 'Server Error' });
     }
 });
 
