@@ -1,9 +1,11 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { Search, User, ShoppingBag, ArrowRight, Truck, ShieldCheck, Clock } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function MinimalStore() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -29,6 +31,13 @@ export default function MinimalStore() {
 
     fetchProfile();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUserEmail(null);
+    router.push('/');
+  };
+  
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-gray-900 font-sans">
       {/* 1. Navbar */}
@@ -56,9 +65,16 @@ export default function MinimalStore() {
 
               {/* เช็คว่ามี userEmail หรือไม่ ถ้ามีให้แสดงอีเมล ถ้าไม่มีให้แสดงไอคอน User ตามปกติ */}
               {userEmail ? (
-                <span className="text-sm font-medium text-gray-700">{userEmail}</span>
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm font-medium text-gray-700">{userEmail}</span>
+                  <button onClick={handleLogout} className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors">
+                    ออกจากระบบ
+                  </button>
+                </div>
               ) : (
-                <button className="text-gray-600 hover:text-black"><User size={20} strokeWidth={1.5} /></button>
+                <button className="text-gray-600 hover:text-black">
+                  <User size={20} strokeWidth={1.5} />
+                </button>
               )}
 
               <button className="text-gray-600 hover:text-black relative">
