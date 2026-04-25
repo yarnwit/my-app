@@ -1,0 +1,14 @@
+{"email":"ywechramy@gmail.com","event":"login_failed","level":"warn","message":"Login failed: Invalid password","timestamp":"2026-04-25 16:14:39"}
+{"level":"info","message":"POST /api/auth/login 400 95 - 274.217 ms","timestamp":"2026-04-25 16:14:39"}
+{"email":"ywechramy@gmail.com","event":"login_failed","level":"warn","message":"Login failed: Invalid password","timestamp":"2026-04-25 16:14:48"}
+{"level":"info","message":"POST /api/auth/login 400 95 - 98.666 ms","timestamp":"2026-04-25 16:14:48"}
+{"email":"ywechramy@gmail.com","event":"login_failed","level":"warn","message":"Login failed: Invalid password","timestamp":"2026-04-25 16:14:58"}
+{"level":"info","message":"POST /api/auth/login 400 95 - 86.318 ms","timestamp":"2026-04-25 16:14:58"}
+{"email":"ywechramy@gmail.com","event":"login_failed","level":"warn","message":"Login failed: Invalid password","timestamp":"2026-04-25 16:15:02"}
+{"level":"info","message":"POST /api/auth/login 400 95 - 104.616 ms","timestamp":"2026-04-25 16:15:02"}
+{"level":"info","message":"POST /api/auth/forgot-password 200 140 - 3185.895 ms","timestamp":"2026-04-25 16:15:32"}
+{"level":"info","message":"POST /api/auth/reset-password 200 201 - 173.254 ms","timestamp":"2026-04-25 16:15:49"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-04-25 16:16:05","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 134.902 ms","timestamp":"2026-04-25 16:16:05"}
+{"level":"info","message":"GET /api/auth/me 200 38 - 3.402 ms","timestamp":"2026-04-25 16:16:06"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.679 ms","timestamp":"2026-04-25 16:16:06"}

@@ -6,6 +6,8 @@ const pool = require('./db');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const auth = require('./middleware/auth');
+const morgan = require('morgan');
+const logger = require('./utils/logger');
 require('dotenv').config({ path: '../.env' });
 
 const transporter = nodemailer.createTransport({
@@ -19,6 +21,15 @@ const transporter = nodemailer.createTransport({
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const morganFormat = ':method :url :status :res[content-length] - :response-time ms';
+app.use(
+    morgan(morganFormat, {
+        stream: {
+            write: (message) => logger.info(message.trim()),
+        },
+    })
+);
 
 app.post('/api/auth/register', async (req, res) => {
     try{
@@ -50,11 +61,13 @@ app.post('/api/auth/login', async (req, res) => {
 
         const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         if(user.rows.length === 0){
+            logger.warn('Login failed: User not found', { email, event: 'login_failed' });
             return res.status(400).json({ message: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
         }
 
         const validPassword = await bcrypt.compare(password, user.rows[0].password_hash);
         if(!validPassword){
+            logger.warn('Login failed: Invalid password', { email, event: 'login_failed' });
             return res.status(400).json({ message: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
         }
 
@@ -64,6 +77,8 @@ app.post('/api/auth/login', async (req, res) => {
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+        logger.info('Login successful', { userId: user.rows[0].id, event: 'login_success' });
 
         res.json({ message: 'เข้าสู่ระบบสำเร็จ', token });
     } catch (error) {
