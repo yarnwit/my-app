@@ -13,3 +13,13 @@
 {"level":"info","message":"POST /api/auth/login 200 259 - 193.810 ms","timestamp":"2026-04-27 22:10:12"}
 {"level":"info","message":"GET /api/auth/me 304 - - 4.003 ms","timestamp":"2026-04-27 22:10:12"}
 {"level":"info","message":"GET /api/auth/me 304 - - 1.301 ms","timestamp":"2026-04-27 22:10:12"}
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-04-27 22:55:37"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-04-27 22:56:04","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 240.122 ms","timestamp":"2026-04-27 22:56:04"}
+{"level":"info","message":"GET /api/auth/me 304 - - 4.558 ms","timestamp":"2026-04-27 22:56:04"}
+{"level":"info","message":"GET /api/auth/me 304 - - 2.001 ms","timestamp":"2026-04-27 22:56:04"}
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-04-27 23:07:25"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-04-27 23:07:39","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 275.022 ms","timestamp":"2026-04-27 23:07:39"}
+{"level":"info","message":"GET /api/auth/me 304 - - 3.624 ms","timestamp":"2026-04-27 23:07:39"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.389 ms","timestamp":"2026-04-27 23:07:39"}

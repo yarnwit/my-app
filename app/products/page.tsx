@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { ShoppingCart, Star, Filter, Search } from 'lucide-react';
 
 // --- ข้อมูลจำลอง (Mock Data) ---
@@ -21,6 +22,7 @@ const MOCK_PRODUCTS = [
     rating: 4.8,
     reviews: 124,
     imageColor: 'bg-rose-100',
+    imageUrl: '/products/B08335A802B780BBE81966C79B6D93CF_800x.jpg',
   },
   {
     id: 2,
@@ -30,6 +32,7 @@ const MOCK_PRODUCTS = [
     rating: 4.5,
     reviews: 89,
     imageColor: 'bg-blue-100',
+    imageUrl: '/products/f6510ce8102eaa07fd673f40be7dc802.jpg',
   },
   {
     id: 3,
@@ -39,6 +42,7 @@ const MOCK_PRODUCTS = [
     rating: 4.9,
     reviews: 210,
     imageColor: 'bg-amber-100',
+    imageUrl: '/products/sg-11134201-22110-prju4dtjirjv14.jpg',
   },
   {
     id: 4,
@@ -48,6 +52,7 @@ const MOCK_PRODUCTS = [
     rating: 4.7,
     reviews: 45,
     imageColor: 'bg-slate-200',
+    imageUrl: '/products/qcy63j.jpg',
   },
   {
     id: 5,
@@ -57,6 +62,7 @@ const MOCK_PRODUCTS = [
     rating: 4.6,
     reviews: 356,
     imageColor: 'bg-pink-100',
+    imageUrl: '/products/f6510ce8102eaa07fd673f40be7dc802.jpg',
   },
   {
     id: 6,
@@ -66,6 +72,7 @@ const MOCK_PRODUCTS = [
     rating: 4.4,
     reviews: 78,
     imageColor: 'bg-indigo-100',
+    imageUrl: '/products/z6.jpg',
   },
   {
     id: 7,
@@ -75,6 +82,7 @@ const MOCK_PRODUCTS = [
     rating: 4.6,
     reviews: 112,
     imageColor: 'bg-stone-200',
+    imageUrl: '/products/4-1.jpg',
   },
   {
     id: 8,
@@ -84,6 +92,7 @@ const MOCK_PRODUCTS = [
     rating: 4.8,
     reviews: 95,
     imageColor: 'bg-zinc-200',
+    imageUrl: '/products/as7dai.jpg',
   },
 ];
 
@@ -167,20 +176,30 @@ export default function ProductsPage() {
                 key={product.id} 
                 className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-300 group flex flex-col"
               >
-                {/* รูปภาพจำลอง (Placeholder) */}
+                {/* ส่วนรูปภาพที่แก้ไขแล้ว */}
                 <div className={`w-full aspect-square ${product.imageColor} relative overflow-hidden flex items-center justify-center`}>
-                   <span className="text-4xl opacity-50 block group-hover:scale-110 transition-transform duration-300">
-                      
+                  {/* ดักเงื่อนไข: ถ้ามี imageUrl ถึงจะใช้ Next/Image */}
+                  {product.imageUrl ? (
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-300"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    />
+                  ) : (
+                    /* ถ้าไม่มี imageUrl ให้แสดงกล่องแทน */
+                    <span className="text-4xl opacity-50 block group-hover:scale-110 transition-transform duration-300">
+                      📦
+                    </span>
+                  )}
 
-[Image of {product.name}]
-
-                   </span>
-                   {/* ป้าย Tag (จำลอง) */}
-                   {product.rating >= 4.8 && (
-                     <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md">
-                       ยอดฮิต
-                     </div>
-                   )}
+                  {/* ป้าย Tag ยอดฮิต */}
+                  {product.rating >= 4.8 && (
+                    <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md z-10">
+                      ยอดฮิต
+                    </div>
+                  )}
                 </div>
 
                 {/* รายละเอียดสินค้า */}
