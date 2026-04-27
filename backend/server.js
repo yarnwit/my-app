@@ -10,6 +10,16 @@ const morgan = require('morgan');
 const logger = require('./utils/logger');
 require('dotenv').config({ path: '../.env' });
 
+process.on('uncaughtException', (err) => {
+    logger.error('FATAL: Uncaught Exception', { error: err.message, stack: err.stack });
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    logger.error('FATAL: Unhandled Rejection at promise', { reason: reason });
+    process.exit(1);
+});
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -50,7 +60,7 @@ app.post('/api/auth/register', async (req, res) => {
 
         res.status(201).json({ message: 'ลงทะเบียนสำเร็จ', user: newUser.rows[0] });
     } catch (error) {
-        console.error(error.message);
+        logger.error('Registration failed', { error: error.message, stack: error.stack, event: 'register_error' });
         res.status(500).json({ message: 'Server Error' });
     }
 });
@@ -164,4 +174,4 @@ app.get('/api/auth/me', auth, async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => logger.info(`Server running on port ${PORT}`, { event: 'server_start' }));

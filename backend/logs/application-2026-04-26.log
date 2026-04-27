@@ -1,0 +1,7 @@
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-04-26 22:14:45"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-04-26 22:15:09","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 189.493 ms","timestamp":"2026-04-26 22:15:09"}
+{"level":"info","message":"GET /api/auth/me 200 38 - 4.209 ms","timestamp":"2026-04-26 22:15:10"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.904 ms","timestamp":"2026-04-26 22:15:10"}
+{"email":"admin@admin.com","event":"login_failed","level":"warn","message":"Login failed: User not found","timestamp":"2026-04-26 22:15:38"}
+{"level":"info","message":"POST /api/auth/login 400 95 - 49.700 ms","timestamp":"2026-04-26 22:15:38"}
