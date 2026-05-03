@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, User, ShoppingBag, ArrowRight, Truck, ShieldCheck, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function MinimalStore() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -51,10 +52,10 @@ export default function MinimalStore() {
             
             {/* Center Menu */}
             <div className="hidden md:flex space-x-8">
-              <a href="#" className="text-sm font-medium hover:text-gray-500">หน้าแรก</a>
-              <a href="#" className="text-sm font-medium text-gray-500 hover:text-black">สินค้าทั้งหมด</a>
-              <a href="#" className="text-sm font-medium text-gray-500 hover:text-black">คอลเลกชันใหม่</a>
-              <a href="#" className="text-sm font-medium text-gray-500 hover:text-black">เกี่ยวกับเรา</a>
+              <Link href="/Homepage" className="hover:text-black transition">หน้าแรก</Link>
+              <Link href="/products" className="hover:text-black transition">สินค้าทั้งหมด</Link>
+              <Link href="#" className="hover:text-black transition">คอลเลกชันใหม่</Link>
+              <Link href="#" className="hover:text-black transition">เกี่ยวกับเรา</Link>
             </div>
 
             {/* Right Icons */}

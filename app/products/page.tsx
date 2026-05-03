@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ShoppingCart, Star, Filter, Search } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ShoppingCart, Star, Filter, Search, User, ShoppingBag } from 'lucide-react';
 
 // --- ข้อมูลจำลอง (Mock Data) ---
 const CATEGORIES = [
@@ -97,9 +99,45 @@ const MOCK_PRODUCTS = [
 ];
 
 export default function ProductsPage() {
-  // State สำหรับเก็บหมวดหมู่ที่ถูกเลือกและคำค้นหา
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // State สำหรับดึงข้อมูล Auth จากหน้า Homepage
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const router = useRouter();
+
+  // ดึงข้อมูล User เหมือนในหน้า Homepage
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('token');
+      if(!token) return;
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/me', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if(response.ok) {
+          const data = await response.json();
+          setUserEmail(data.email);
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  // ฟังก์ชันออกจากระบบ
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUserEmail(null);
+    router.push('/');
+  };
 
   // ฟังก์ชันกรองสินค้า
   const filteredProducts = MOCK_PRODUCTS.filter((product) => {
@@ -109,9 +147,57 @@ export default function ProductsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-12">
-      {/* ส่วนหัวของหน้า */}
-      <header className="bg-white shadow-sm sticky top-0 z-10">
+    <div className="min-h-screen bg-[#FAFAFA] pb-12 font-sans text-gray-900">
+      
+      {/* 1. Navbar (ใช้ UI เดียวกับหน้า Homepage) */}
+      <nav className="sticky top-0 z-50 bg-[#F9F9F8] border-b border-gray-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo เปลี่ยนเป็น Link กลับหน้าแรก */}
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/Homepage" className="font-bold text-2xl tracking-widest uppercase hover:opacity-80 transition-opacity">
+                Minimal.
+              </Link>
+            </div>
+            
+            {/* Center Menu */}
+            <div className="hidden md:flex space-x-8">
+              <Link href="/Homepage" className="text-gray-500 hover:text-black transition">หน้าแรก</Link>
+              <Link href="/products" className="text-black font-medium transition">สินค้าทั้งหมด</Link>
+              <Link href="#" className="text-gray-500 hover:text-black transition">คอลเลกชันใหม่</Link>
+              <Link href="#" className="text-gray-500 hover:text-black transition">เกี่ยวกับเรา</Link>
+            </div>
+
+            {/* Right Icons */}
+            <div className="flex items-center space-x-6">
+              <button className="text-gray-600 hover:text-black transition-colors">
+                <Search size={20} strokeWidth={1.5} />
+              </button>
+
+              {/* เช็คว่ามี userEmail หรือไม่ */}
+              {userEmail ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm font-medium text-gray-700">{userEmail}</span>
+                  <button onClick={handleLogout} className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors">
+                    ออกจากระบบ
+                  </button>
+                </div>
+              ) : (
+                <Link href="/login" className="text-gray-600 hover:text-black transition-colors">
+                  <User size={20} strokeWidth={1.5} />
+                </Link>
+              )}
+
+              <button className="text-gray-600 hover:text-black relative transition-colors">
+                <ShoppingBag size={20} strokeWidth={1.5} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* ส่วนหัวของการค้นหาสินค้า (แก้ไข top เป็น 20 เพื่อไม่ให้ทับกับ Navbar ด้านบน) */}
+      <header className="bg-white shadow-sm sticky top-20 z-40 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <h1 className="text-2xl font-bold text-gray-900">สินค้าทั้งหมด</h1>
@@ -123,7 +209,7 @@ export default function ProductsPage() {
               </div>
               <input
                 type="text"
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150 ease-in-out text-gray-900"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-black focus:border-black sm:text-sm transition duration-150 ease-in-out text-gray-900"
                 placeholder="ค้นหาสินค้า..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -150,8 +236,8 @@ export default function ProductsPage() {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`flex-shrink-0 flex items-center gap-2 px-5 py-3 rounded-xl border font-medium transition-all duration-200 ${
                   selectedCategory === category.id
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-md transform scale-105'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+                    ? 'bg-black text-white border-black shadow-md transform scale-105'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                 }`}
               >
                 <span className="text-xl">{category.icon}</span>
@@ -176,19 +262,17 @@ export default function ProductsPage() {
                 key={product.id} 
                 className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-300 group flex flex-col"
               >
-                {/* ส่วนรูปภาพที่แก้ไขแล้ว */}
+                {/* ส่วนรูปภาพ */}
                 <div className={`w-full aspect-square ${product.imageColor} relative overflow-hidden flex items-center justify-center`}>
-                  {/* ดักเงื่อนไข: ถ้ามี imageUrl ถึงจะใช้ Next/Image */}
                   {product.imageUrl ? (
                     <Image
                       src={product.imageUrl}
                       alt={product.name}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                   ) : (
-                    /* ถ้าไม่มี imageUrl ให้แสดงกล่องแทน */
                     <span className="text-4xl opacity-50 block group-hover:scale-110 transition-transform duration-300">
                       📦
                     </span>
@@ -196,7 +280,7 @@ export default function ProductsPage() {
 
                   {/* ป้าย Tag ยอดฮิต */}
                   {product.rating >= 4.8 && (
-                    <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md z-10">
+                    <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md z-10 tracking-wide">
                       ยอดฮิต
                     </div>
                   )}
@@ -204,7 +288,7 @@ export default function ProductsPage() {
 
                 {/* รายละเอียดสินค้า */}
                 <div className="p-5 flex flex-col flex-grow">
-                  <div className="text-xs text-blue-600 font-medium mb-1 uppercase tracking-wider">
+                  <div className="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wider">
                     {CATEGORIES.find(c => c.id === product.category)?.name}
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
@@ -223,7 +307,7 @@ export default function ProductsPage() {
                     <div className="text-xl font-bold text-gray-900">
                       ฿{product.price.toLocaleString()}
                     </div>
-                    <button className="bg-gray-900 hover:bg-blue-600 text-white p-2.5 rounded-full transition-colors duration-200">
+                    <button className="bg-gray-100 text-gray-900 hover:bg-black hover:text-white p-2.5 rounded-full transition-colors duration-200">
                       <ShoppingCart className="h-5 w-5" />
                     </button>
                   </div>
@@ -239,7 +323,7 @@ export default function ProductsPage() {
             <p className="text-gray-500">ลองเปลี่ยนคำค้นหาหรือเลือกหมวดหมู่ใหม่ดูสิ</p>
             <button 
               onClick={() => {setSearchQuery(''); setSelectedCategory('all');}}
-              className="mt-6 px-6 py-2 bg-blue-100 text-blue-700 font-medium rounded-full hover:bg-blue-200 transition-colors"
+              className="mt-6 px-6 py-2 bg-gray-100 text-gray-900 font-medium rounded-full hover:bg-gray-200 transition-colors"
             >
               ล้างการค้นหา
             </button>
