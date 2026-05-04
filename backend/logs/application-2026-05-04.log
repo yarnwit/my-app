@@ -1,0 +1,7 @@
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-05-04 22:21:15"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-05-04 22:21:57","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 132.431 ms","timestamp":"2026-05-04 22:21:57"}
+{"level":"info","message":"GET /api/auth/me 200 38 - 2.461 ms","timestamp":"2026-05-04 22:21:57"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.423 ms","timestamp":"2026-05-04 22:21:57"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.361 ms","timestamp":"2026-05-04 22:22:04"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.043 ms","timestamp":"2026-05-04 22:22:04"}
