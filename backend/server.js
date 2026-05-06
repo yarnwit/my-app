@@ -173,5 +173,15 @@ app.get('/api/auth/me', auth, async (req, res) => {
     }
 });
 
+app.get('/api/products', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM products ORDER BY id ASC');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => logger.info(`Server running on port ${PORT}`, { event: 'server_start' }));

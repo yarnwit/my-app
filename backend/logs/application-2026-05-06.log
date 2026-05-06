@@ -1,0 +1,15 @@
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-05-06 23:20:51"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-05-06 23:21:24","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 139.015 ms","timestamp":"2026-05-06 23:21:24"}
+{"level":"info","message":"GET /api/auth/me 304 - - 3.752 ms","timestamp":"2026-05-06 23:21:24"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.752 ms","timestamp":"2026-05-06 23:21:24"}
+{"level":"info","message":"GET /api/products 200 2761 - 2.078 ms","timestamp":"2026-05-06 23:21:27"}
+{"level":"info","message":"GET /api/products 304 - - 1.654 ms","timestamp":"2026-05-06 23:21:27"}
+{"level":"info","message":"GET /api/auth/me 304 - - 67.391 ms","timestamp":"2026-05-06 23:21:27"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.704 ms","timestamp":"2026-05-06 23:21:27"}
+{"level":"info","message":"GET /api/auth/me 304 - - 63.918 ms","timestamp":"2026-05-06 23:22:33"}
+{"level":"info","message":"GET /api/auth/me 304 - - 0.947 ms","timestamp":"2026-05-06 23:22:33"}
+{"level":"info","message":"GET /api/products 304 - - 155.921 ms","timestamp":"2026-05-06 23:22:57"}
+{"level":"info","message":"GET /api/products 304 - - 0.889 ms","timestamp":"2026-05-06 23:22:57"}
+{"level":"info","message":"GET /api/auth/me 304 - - 172.419 ms","timestamp":"2026-05-06 23:22:57"}
+{"level":"info","message":"GET /api/auth/me 304 - - 0.801 ms","timestamp":"2026-05-06 23:22:57"}
