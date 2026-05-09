@@ -18,3 +18,22 @@
 {"level":"info","message":"GET /api/auth/me 304 - - 1.394 ms","timestamp":"2026-05-09 14:31:30"}
 {"level":"info","message":"GET /api/auth/me 304 - - 50.834 ms","timestamp":"2026-05-09 14:32:01"}
 {"level":"info","message":"GET /api/auth/me 304 - - 0.982 ms","timestamp":"2026-05-09 14:32:01"}
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-05-09 14:39:29"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-05-09 14:39:47","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 148.404 ms","timestamp":"2026-05-09 14:39:47"}
+{"level":"info","message":"GET /api/auth/me 304 - - 2.594 ms","timestamp":"2026-05-09 14:39:47"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.279 ms","timestamp":"2026-05-09 14:39:47"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.415 ms","timestamp":"2026-05-09 14:39:49"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.636 ms","timestamp":"2026-05-09 14:39:49"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.502 ms","timestamp":"2026-05-09 14:39:50"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.123 ms","timestamp":"2026-05-09 14:39:50"}
+{"level":"info","message":"GET /api/products 304 - - 157.167 ms","timestamp":"2026-05-09 14:39:50"}
+{"level":"info","message":"GET /api/products 304 - - 0.880 ms","timestamp":"2026-05-09 14:39:50"}
+{"level":"info","message":"GET /api/auth/me 304 - - 2.220 ms","timestamp":"2026-05-09 14:39:51"}
+{"level":"info","message":"GET /api/products 304 - - 2.230 ms","timestamp":"2026-05-09 14:39:51"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.195 ms","timestamp":"2026-05-09 14:39:51"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.587 ms","timestamp":"2026-05-09 14:39:51"}
+{"level":"info","message":"GET /api/auth/me 304 - - 0.892 ms","timestamp":"2026-05-09 14:39:52"}
+{"level":"info","message":"GET /api/auth/me 304 - - 0.697 ms","timestamp":"2026-05-09 14:39:52"}
+{"level":"info","message":"GET /api/auth/me 304 - - 50.520 ms","timestamp":"2026-05-09 14:40:15"}
+{"level":"info","message":"GET /api/auth/me 304 - - 0.873 ms","timestamp":"2026-05-09 14:40:15"}

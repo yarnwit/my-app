@@ -1,10 +1,46 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, Rocket, Microchip, ShieldCheck, Target, Zap } from 'lucide-react';
+import { Eye, Rocket, Microchip, ShieldCheck, Target, Zap, Search, User, ShoppingBag } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const AboutPage = () => {
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('token');
+      if(!token) return;
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/me', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if(response.ok) {
+          const data = await response.json();
+          setUserEmail(data.email);
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUserEmail(null);
+    router.push('/');
+  };
+
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -37,6 +73,51 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-cyan-500/30">
+      {/* Navbar แบบเดียวกับ Homepage */}
+      <nav className="sticky top-0 z-50 bg-[#F9F9F8] border-b border-gray-100 text-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center">
+              <span className="font-bold text-2xl tracking-widest uppercase">Minimal.</span>
+            </div>
+            
+            {/* Center Menu */}
+            <div className="hidden md:flex space-x-8">
+              <Link href="/Homepage" className="hover:text-black transition">หน้าแรก</Link>
+              <Link href="/products" className="hover:text-black transition">สินค้าทั้งหมด</Link>
+              <Link href="/new-collection" className="text-gray-500 hover:text-black transition">คอลเลกชันใหม่</Link>
+              <Link href="/about" className="hover:text-black transition">เกี่ยวกับเรา</Link>
+            </div>
+
+            {/* Right Icons */}
+            <div className="flex items-center space-x-6">
+              <button className="text-gray-600 hover:text-black">
+                <Search size={20} strokeWidth={1.5} />
+              </button>
+
+              {/* เช็คว่ามี userEmail หรือไม่ ถ้ามีให้แสดงอีเมล ถ้าไม่มีให้แสดงไอคอน User ตามปกติ */}
+              {userEmail ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm font-medium text-gray-700">{userEmail}</span>
+                  <button onClick={handleLogout} className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors">
+                    ออกจากระบบ
+                  </button>
+                </div>
+              ) : (
+                <button className="text-gray-600 hover:text-black">
+                  <User size={20} strokeWidth={1.5} />
+                </button>
+              )}
+
+              <button className="text-gray-600 hover:text-black relative">
+                <ShoppingBag size={20} strokeWidth={1.5} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="relative h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6">
         <div className="absolute inset-0 z-0">
