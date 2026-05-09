@@ -1,0 +1,20 @@
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-05-09 14:14:00"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-05-09 14:14:26","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 144.861 ms","timestamp":"2026-05-09 14:14:26"}
+{"level":"info","message":"GET /api/auth/me 304 - - 2.368 ms","timestamp":"2026-05-09 14:14:26"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.117 ms","timestamp":"2026-05-09 14:14:26"}
+{"level":"info","message":"GET /api/products 304 - - 5.468 ms","timestamp":"2026-05-09 14:14:33"}
+{"level":"info","message":"GET /api/products 304 - - 1.506 ms","timestamp":"2026-05-09 14:14:33"}
+{"level":"info","message":"GET /api/auth/me 304 - - 63.458 ms","timestamp":"2026-05-09 14:14:33"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.541 ms","timestamp":"2026-05-09 14:14:33"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.436 ms","timestamp":"2026-05-09 14:14:35"}
+{"level":"info","message":"GET /api/products 304 - - 1.540 ms","timestamp":"2026-05-09 14:14:35"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.048 ms","timestamp":"2026-05-09 14:14:36"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.066 ms","timestamp":"2026-05-09 14:14:36"}
+{"event":"server_start","level":"info","message":"Server running on port 5000","timestamp":"2026-05-09 14:31:04"}
+{"event":"login_success","level":"info","message":"Login successful","timestamp":"2026-05-09 14:31:29","userId":1}
+{"level":"info","message":"POST /api/auth/login 200 259 - 141.484 ms","timestamp":"2026-05-09 14:31:29"}
+{"level":"info","message":"GET /api/auth/me 304 - - 2.593 ms","timestamp":"2026-05-09 14:31:30"}
+{"level":"info","message":"GET /api/auth/me 304 - - 1.394 ms","timestamp":"2026-05-09 14:31:30"}
+{"level":"info","message":"GET /api/auth/me 304 - - 50.834 ms","timestamp":"2026-05-09 14:32:01"}
+{"level":"info","message":"GET /api/auth/me 304 - - 0.982 ms","timestamp":"2026-05-09 14:32:01"}

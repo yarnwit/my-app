@@ -118,7 +118,7 @@ export default function ProductsPage() {
               <Link href="/Homepage" className="text-gray-500 hover:text-black transition">หน้าแรก</Link>
               <Link href="/products" className="text-black font-medium transition">สินค้าทั้งหมด</Link>
               <Link href="/new-collection" className="text-gray-500 hover:text-black transition">คอลเลกชันใหม่</Link>
-              <Link href="#" className="text-gray-500 hover:text-black transition">เกี่ยวกับเรา</Link>
+              <Link href="/about" className="text-gray-500 hover:text-black transition">เกี่ยวกับเรา</Link>
             </div>
 
             <div className="flex items-center space-x-6">

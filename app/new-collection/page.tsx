@@ -95,7 +95,7 @@ export default function NewCollectionPage() {
                             <Link href="/products" className="text-gray-500 hover:text-black transition">สินค้าทั้งหมด</Link>
                             {/* Highlight คอลเลกชันใหม่ */}
                             <Link href="/new-collection" className="text-black font-medium transition border-b-2 border-black pb-1">คอลเลกชันใหม่</Link>
-                            <Link href="#" className="text-gray-500 hover:text-black transition">เกี่ยวกับเรา</Link>
+                            <Link href="/about" className="text-gray-500 hover:text-black transition">เกี่ยวกับเรา</Link>
                         </div>
 
                         <div className="flex items-center space-x-6">

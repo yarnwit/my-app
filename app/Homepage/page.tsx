@@ -55,7 +55,7 @@ export default function MinimalStore() {
               <Link href="/Homepage" className="hover:text-black transition">หน้าแรก</Link>
               <Link href="/products" className="hover:text-black transition">สินค้าทั้งหมด</Link>
               <Link href="/new-collection" className="text-gray-500 hover:text-black transition">คอลเลกชันใหม่</Link>
-              <Link href="#" className="hover:text-black transition">เกี่ยวกับเรา</Link>
+              <Link href="/about" className="hover:text-black transition">เกี่ยวกับเรา</Link>
             </div>
 
             {/* Right Icons */}
